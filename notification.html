@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krynnor Notification</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        .notification-container {
+            width: 380px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d0a0a 100%);
+            border: 2px solid #dc2626;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(220, 38, 38, 0.4);
+            overflow: hidden;
+            animation: slideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .notification-header {
+            background: linear-gradient(90deg, #dc2626 0%, #991b1b 100%);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(220, 38, 38, 0.3);
+        }
+
+        .notification-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .notification-app {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .app-name {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 14px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .app-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 11px;
+        }
+
+        .notification-close {
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .notification-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .notification-body {
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .notification-title {
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .notification-message {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .notification-footer {
+            padding: 8px 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(220, 38, 38, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification-time {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 11px;
+        }
+
+        .notification-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-success {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .badge-info {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .badge-warning {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .badge-error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ffd700 0%, #dc2626 100%);
+            animation: progress 5s linear forwards;
+        }
+
+        @keyframes progress {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="notification-container">
+        <div class="notification-header">
+            <div class="notification-icon" id="icon">🛡️</div>
+            <div class="notification-app">
+                <div class="app-name">Krynnor Cleaner</div>
+                <div class="app-subtitle" id="subtitle">Sistema de Otimização</div>
+            </div>
+            <button class="notification-close" onclick="closeNotification()">✕</button>
+        </div>
+
+        <div class="notification-body">
+            <div class="notification-title" id="title">Título da Notificação</div>
+            <div class="notification-message" id="message">Mensagem da notificação aqui.</div>
+        </div>
+
+        <div class="notification-footer">
+            <div class="notification-time" id="time">Agora</div>
+            <div class="notification-badge" id="badge">INFO</div>
+        </div>
+
+        <div class="progress-bar"></div>
+    </div>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        // Receber dados da notificação
+        ipcRenderer.on('show-notification', (event, data) => {
+            const { title, message, type, language } = data;
+
+            // Definir textos baseado no idioma
+            const texts = {
+                'pt-BR': {
+                    subtitle: 'Sistema de Otimização',
+                    time: 'Agora',
+                    types: {
+                        success: 'SUCESSO',
+                        info: 'INFO',
+                        warning: 'AVISO',
+                        error: 'ERRO'
+                    }
+                },
+                'en-US': {
+                    subtitle: 'Optimization System',
+                    time: 'Now',
+                    types: {
+                        success: 'SUCCESS',
+                        info: 'INFO',
+                        warning: 'WARNING',
+                        error: 'ERROR'
+                    }
+                }
+            };
+
+            const lang = texts[language] || texts['pt-BR'];
+
+            // Ícones por tipo
+            const icons = {
+                success: '✅',
+                info: '📊',
+                warning: '⚠️',
+                error: '❌'
+            };
+
+            // Atualizar conteúdo
+            document.getElementById('subtitle').textContent = lang.subtitle;
+            document.getElementById('title').textContent = title;
+            document.getElementById('message').textContent = message;
+            document.getElementById('time').textContent = lang.time;
+            document.getElementById('icon').textContent = icons[type] || '🛡️';
+            
+            const badge = document.getElementById('badge');
+            badge.textContent = lang.types[type] || 'INFO';
+            badge.className = `notification-badge badge-${type}`;
+
+            // Auto-fechar após 5 segundos
+            setTimeout(() => {
+                closeNotification();
+            }, 5000);
+        });
+
+        function closeNotification() {
+            ipcRenderer.send('close-notification');
+        }
+
+        // Clicar na notificação abre o app
+        document.querySelector('.notification-container').addEventListener('click', (e) => {
+            if (!e.target.classList.contains('notification-close')) {
+                ipcRenderer.send('notification-clicked');
+            }
+        });
+    </script>
+</body>
+</html>

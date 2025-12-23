@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krynnor Cleaner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'krynnor-red': '#c60000',
+                        'krynnor-red-dark': '#a00000',
+                        'krynnor-red-light': '#e00000',
+                        'krynnor-gold': '#ffd700',
+                        'krynnor-dark': '#0a0a0a',
+                        'krynnor-gray': '#1a1a1a',
+                        'krynnor-card': '#2d2d2d',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+        }
+        
+        /* Efeitos Neon */
+        .neon-gold {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8),
+                         0 0 20px rgba(255, 215, 0, 0.6);
+        }
+        
+        .neon-gold-border {
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5),
+                        inset 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+        
+        .neon-red {
+            box-shadow: 0 0 10px rgba(198, 0, 0, 0.5);
+        }
+        
+        .neon-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .neon-button:hover {
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+            transform: translateY(-2px);
+        }
+        
+        /* Animação de pulso */
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            }
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s infinite;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #c41e3a;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #dc2f4a;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="/src/index.jsx"></script>
+</body>
+</html>
