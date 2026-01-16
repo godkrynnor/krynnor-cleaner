@@ -10,7 +10,7 @@ const execPromise = util.promisify(exec);
 let mainWindow;
 let tray = null;
 let notificationCheckInterval = null;
-const isDev = process.env.NODE_ENV !== 'production';
+const isDev = !app.isPackaged; // DEV when running locally, PROD when packaged
 const iconCache = new Map();
 
 // ============================================
@@ -40,7 +40,7 @@ function createWindow() {
     if (isDev) {
         mainWindow.loadURL('http://localhost:5173');
     } else {
-        mainWindow.loadFile(path.join(__dirname, 'dist-react', 'index.html'));
+        mainWindow.loadFile(path.join(__dirname, 'dist', 'index.html'));
     }
 
     // ✅ MINIMIZAR PARA BANDEJA AO FECHAR

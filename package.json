@@ -11,7 +11,8 @@
     "build": "vite build",
     "electron": "electron .",
     "start": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && electron .\"",
-    "package": "npm run build && electron-builder"
+    "dist": "npm run build && electron-builder",
+    "package": "npm run dist"
   },
   "keywords": [
     "cleaner",
@@ -40,13 +41,34 @@
     "appId": "com.krynnor.cleaner",
     "productName": "Krynnor Cleaner",
     "copyright": "Copyright © 2024 Krynnor Software Company",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "assets/**",
+      "main.js",
+      "preload.js",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "assets",
+        "to": "assets"
+      }
+    ],
     "win": {
-      "target": "nsis",
-      "icon": "assets/icon.png"
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "assets/icon.ico"
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
     }
   }
 }
